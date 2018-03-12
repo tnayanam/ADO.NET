@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace WebApplication1
 {
@@ -28,7 +29,8 @@ namespace WebApplication1
             //}
 
             // Other type
-            using (SqlConnection con = new SqlConnection(@"data source=.\MSSQLSERVER01; database=Sample; integrated security=SSPI"))
+            var CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(CS))
             {
                 SqlCommand cmd = new SqlCommand("Select * from tblProduct", con);
                 con.Open();
