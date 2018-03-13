@@ -32,12 +32,10 @@ namespace WebApplication1
             var CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))
             {
-                SqlCommand cmd = new SqlCommand("Select * from tblProduct", con);
+                SqlCommand cmd = new SqlCommand("Select count(*) from tblProduct", con);
                 con.Open();
-                SqlDataReader rdr = cmd.ExecuteReader(); // since we are getting more than a single values.
-                GridView1.DataSource = rdr;
-                GridView1.DataBind();
-                con.Close();
+                int TotalRows = (int)cmd.ExecuteScalar(); // since we are getting generic object from result we need to cast it
+                Response.Write(" Total Rows" + TotalRows);
             }
         }
     }
