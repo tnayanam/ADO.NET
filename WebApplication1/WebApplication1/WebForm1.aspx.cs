@@ -32,10 +32,16 @@ namespace WebApplication1
             var CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))
             {
-                SqlCommand cmd = new SqlCommand("Select count(*) from tblProduct", con);
+                SqlCommand cmd = new SqlCommand("Insert into tblProduct values ('Mixture', 2340)", con);
                 con.Open();
-                int TotalRows = (int)cmd.ExecuteScalar(); // since we are getting generic object from result we need to cast it
-                Response.Write(" Total Rows" + TotalRows);
+                int TotalRowsAffected = cmd.ExecuteNonQuery(); // we get the number of affecteed rows in output
+                Response.Write(" Total Rows" + TotalRowsAffected);
+                cmd.CommandText = "Update tblProduct set Name = 'Biscuit' where Name = 'Patanjali'";
+                TotalRowsAffected = cmd.ExecuteNonQuery(); // we get the number of affecteed rows in output
+                Response.Write(" Total Rows" + TotalRowsAffected);
+                cmd.CommandText = "Delete from  tblProduct where Name = 'Patanjali'";
+                TotalRowsAffected = cmd.ExecuteNonQuery(); // we get the number of affecteed rows in output
+                Response.Write(" Total Rows" + TotalRowsAffected);
             }
         }
     }
