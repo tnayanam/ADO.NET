@@ -54,3 +54,12 @@ namespace WebApplication1
 
 //ExecuteScalar() only returns the value from the first column of the first row of your query. ExecuteReader() returns an object that can
 //iterate over the entire result set. ExecuteNonQuery() does not return data at all: only the number of rows affected by an insert, update, or delete.
+
+/*
+ * SQLDataReader:
+ * reads data in most efficient way.
+ * SqlDataReader is read-only and forward-onlt, meaning once you read a record and go to the next record, there is no way to go to previous data.
+ * Forward read only makes it most efficient choice of reading data.
+ * It is also not possible to change data using SQLDataReader
+ * THE SQLCOMMAND Objects's EXECUTEREADER method creates and returns the instance of SqlDataReader.
+ */
