@@ -51,3 +51,6 @@ namespace WebApplication1
 //Insert into tblEmployees values(@Name, @Gender, @Salary)
 //Select @EmployeeId  = SCOPE_IDENTITY()
 //END
+
+//ExecuteScalar() only returns the value from the first column of the first row of your query. ExecuteReader() returns an object that can
+//iterate over the entire result set. ExecuteNonQuery() does not return data at all: only the number of rows affected by an insert, update, or delete.
