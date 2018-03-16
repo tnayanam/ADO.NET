@@ -10,14 +10,20 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication1
 {
-    public partial class WebForm5 : System.Web.UI.Page
+    public partial class WebForm6 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using(SqlConnection con = new SqlConnection(cs))
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                SqlDataAdapter da = new SqlDataAdapter("spGetProdInventory", con);
+                SqlDataAdapter da = new SqlDataAdapter("spGetProdInventoryByProductId", con);
+                da.SelectCommand.Parameters.AddWithValue("@ProductId", Convert.ToInt32(TextBox1.Text));
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
                 da.Fill(ds); // now this FILL is very useful as it manages opening of the connection and then executing the command to get the data and the loading it into the dataset and then closes the connection.
@@ -27,11 +33,3 @@ namespace WebApplication1
         }
     }
 }
-
-//Create Proc spGetProdInventory
-//AS
-//Begin
-//Select * from tblProdInventory;
-//End
-
-//exec spGetProdInventory
