@@ -17,30 +17,28 @@ namespace WebApplication1
             string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(CS))
             {
-                SqlCommand cmd = new SqlCommand("Select * from tblProdInventory", con);
+                SqlCommand cmd = new SqlCommand("Select * from tblProdInventory; Select * from tblProdCategory", con); // here we have two result set.
                 con.Open();
                 using (SqlDataReader rdr = cmd.ExecuteReader()) // creates the instance of datareader and loads it with data to be shown in grid.
                 {
-                    DataTable dt = new DataTable();
-                    dt.Columns.Add("Id");
-                    dt.Columns.Add("ProductName");
-                    dt.Columns.Add("UnitPrice");
-                    dt.Columns.Add("DiscountedPrice");
-                    while(rdr.Read())
-                    {
-                        DataRow dr = dt.NewRow();
-                        int origPrice = Convert.ToInt32(rdr["UnitPrice"]);
-                        double discountedPrice = origPrice * 0.9;
-                        dr["Id"] = rdr["ProductId"];
-                        dr["ProductName"] =rdr["ProductName"];
-                        dr["UnitPrice"] = rdr["UnitPrice"];
-                        dr["DiscountedPrice"] = discountedPrice;
-                        dt.Rows.Add(dr);
-                    }
-                    GridView1.DataSource = dt; // binding the data loaded in datarader to the gridview 
+                    GridView1.DataSource = rdr;
                     GridView1.DataBind();
+                    while (rdr.NextResult())
+                    {
+                        GridView2.DataSource = rdr;
+                        GridView2.DataBind();
+                    }
+
                 }
             }
         }
     }
 }
+
+/*
+ * Important: if we want to loop through the rows of single result set then we need to use the rdr.read(). It will loop through single result set.
+ * But incase if we have multiple result set within the rdr then we  need to loop through the result set itself. and then only we can access the rows int hem so for that we need to add
+ * rdr.NextResult()
+ * To Loop through rows of resutl set: READ
+ * To loop through results sets itself use: NextResult.
+ */
