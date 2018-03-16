@@ -17,7 +17,8 @@ namespace WebApplication1
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using(SqlConnection con = new SqlConnection(cs))
             {
-                SqlDataAdapter da = new SqlDataAdapter("Select * from tblProdInventory", con);
+                SqlDataAdapter da = new SqlDataAdapter("spGetProdInventory", con);
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
                 da.Fill(ds); // now this FILL is very useful as it manages opening of the connection and then executing the command to get the data and the loading it into the dataset and then closes the connection.
                 GridView1.DataSource = ds;
