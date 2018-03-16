@@ -17,8 +17,8 @@ namespace WebApplication1
             // text enterd by user causing sqlinjection in the textbox:      ip'; Truncate table tblEmp;Select * from tblProductInventory where ProductName like 'w
             using (SqlConnection con = new SqlConnection(CS))
             {
-                string command = "Select * from tblProductInventory where ProductName like '" + TextBox1.Text + "%'";
-                SqlCommand cmd = new SqlCommand(command, con);
+                SqlCommand cmd = new SqlCommand("Select * from tblInventory where ProductName like @productName", con);
+                cmd.Parameters.AddWithValue("@productName",TextBox1.Text + "%");
                 con.Open();
                 GridView1.DataSource = cmd.ExecuteReader();
                 GridView1.DataBind();
