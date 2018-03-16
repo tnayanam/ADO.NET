@@ -21,9 +21,9 @@ namespace WebApplication1
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
                 da.Fill(ds); // now this FILL is very useful as it manages opening of the connection and then executing the command to get the data and the loading it into the dataset and then closes the connection.
-                GridView1.DataSource = ds.Tables["Table"];
+                GridView1.DataSource = ds.Tables["0"];
                 GridView1.DataBind();
-                GridView2.DataSource = ds.Tables["Table1"];
+                GridView2.DataSource = ds.Tables["1"];
                 GridView2.DataBind();
             }
         }
