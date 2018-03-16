@@ -28,7 +28,6 @@ namespace WebApplication1
                         GridView2.DataSource = rdr;
                         GridView2.DataBind();
                     }
-
                 }
             }
         }
@@ -41,4 +40,8 @@ namespace WebApplication1
  * rdr.NextResult()
  * To Loop through rows of resutl set: READ
  * To loop through results sets itself use: NextResult.
+ * 
+ * 
+ * 
+ * SQLDataReader requires an active  connection for data to be read. Where as SQLdataAdapter and Dataset provides us with disconnected data access.
  */
