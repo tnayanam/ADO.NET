@@ -108,6 +108,36 @@ namespace WebApplication1
             da.Update(ds, "Students");
             lblMessage.Text = "Database Updated!";
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            DataSet ds = (DataSet)Cache["DATASET"];
+            DataRow dr1 = ds.Tables["Students"].NewRow();
+            dr1["Id"] = 101;
+            dr1["Name"] = "Jonahthan";
+            dr1["TotalMarks"] = 9030;
+            dr1["Gender"] = "Male";
+            ds.Tables["Students"].Rows.Add(dr1);
+            foreach (DataRow dr in ds.Tables["Students"].Rows)
+            {
+                if (dr.RowState == DataRowState.Deleted)
+                {
+                    Response.Write(dr["Id", DataRowVersion.Original] + " - " + dr.RowState.ToString() + "</br>"); // to get row state of
+                    // deleted row we had to do like this
+                }
+                else
+                {
+                    Response.Write(dr["Id"].ToString() + " - " + dr.RowState.ToString() + "</br>");
+                }
+            }
+
+            DataRow dr2 = ds.Tables["Students"].NewRow();
+            dr2["Id"] = 101;
+            dr2["Name"] = "Jonahthan";
+            dr2["TotalMarks"] = 9030;
+            dr2["Gender"] = "Male";
+            Response.Write("</br>" + dr2.RowState.ToString()); // rowstate: detached as it isnot added to any datatables. just row has been created but it is not added to datatable.
+        }
     }
 }
 
@@ -137,3 +167,32 @@ namespace WebApplication1
 //Insert into tblStudents values('James Bynes','Male',720)
 //Insert into tblStudents values('Mary Ward','Female',870)
 //Insert into tblStudents values('Nick Niron','Male',680)
+
+
+//    1 - Deleted
+//2 - Unchanged
+//5 - Unchanged
+//6 - Unchanged
+//7 - Unchanged
+//8 - Unchanged
+//9 - Unchanged
+//10 - Unchanged
+//101 - Added
+
+/*
+ * Different Ros States:
+ * Unchanged: if no change has been made to the datatable
+ * Added: When a nbew row is added to the datatable.
+ * Modified: Some element of the row is modified.
+ * Deleted: The row has been deleted and ACCEPT CHANGES has not been called.
+ * Detached: WHen row has been created but not added to the datatable.
+ * 
+ * 
+ * Different Row Versions:
+ * Current: CurrentState of Datarow. This does not exist for a RowState of Deleted which is obvious because it is deleted now. It will only have original rowstate
+ * Original: The original valus of row previous to modification. It wont be available for newly added rows.
+ * Proposed: Proposed values for the row. This exists during an edit version operation on the row.
+ * Default: Default row version for an added, modified or unchanged is "Current". For Deleted: Original, For detached it is proposed.
+ * Original: 
+
+ */
