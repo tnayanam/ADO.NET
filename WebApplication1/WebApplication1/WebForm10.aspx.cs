@@ -107,6 +107,19 @@ namespace WebApplication1
             // correspondiong attached update insert and deleter command is run.
             da.Update(ds, "Students"); // (+++)
             lblMessage.Text = "Database Updated!";
+
+            // all row state below is unchanged because after "Update" eerything is set to unchanged.
+            foreach (DataRow dr in ds.Tables["Students"].Rows)
+            {
+                if (dr.RowState == DataRowState.Deleted)
+                {
+                    Response.Write(dr["Id", DataRowVersion.Original] + " - " + dr.RowState.ToString() + "</br>"); // to get row state of
+                }
+                else
+                {
+                    Response.Write(dr["Id"].ToString() + " - " + dr.RowState.ToString() + "</br>");
+                }
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -197,7 +210,7 @@ namespace WebApplication1
  *  nothing will HAPPEN because based on row state only queries are executed.
  *  Both AccepeChanges  and  RejectChanges  are  applied  to  dataset  and  datatable and datarow  level.
   
-
+    
 
 
  */
