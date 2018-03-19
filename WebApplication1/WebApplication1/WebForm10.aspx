@@ -10,6 +10,9 @@
     <form id="form1" runat="server">
     <div style="font-family :Arial" > 
         <asp:Button ID="btnGetDataFromDB" runat="server" Text="Get data from DB " OnClick="btnGetDataFromDB_Click" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Undo" />
+        <br />
+        <br />
         <asp:GridView ID="gdStudents" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" OnRowCancelingEdit="gdStudents_RowCancelingEdit" OnRowDeleting="gdStudents_RowDeleting" OnRowEditing="gdStudents_RowEditing" OnRowUpdating="gdStudents_RowUpdating">
             <Columns>
                 <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
@@ -27,8 +30,7 @@
 
     </div>
         <p>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-        </p>
+            &nbsp;</p>
     </form>
 </body>
 </html>

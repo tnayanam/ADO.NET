@@ -112,31 +112,20 @@ namespace WebApplication1
         protected void Button1_Click(object sender, EventArgs e)
         {
             DataSet ds = (DataSet)Cache["DATASET"];
-            DataRow dr1 = ds.Tables["Students"].NewRow();
-            dr1["Id"] = 101;
-            dr1["Name"] = "Jonahthan";
-            dr1["TotalMarks"] = 9030;
-            dr1["Gender"] = "Male";
-            ds.Tables["Students"].Rows.Add(dr1);
-            foreach (DataRow dr in ds.Tables["Students"].Rows)
-            {
-                if (dr.RowState == DataRowState.Deleted)
-                {
-                    Response.Write(dr["Id", DataRowVersion.Original] + " - " + dr.RowState.ToString() + "</br>"); // to get row state of
-                    // deleted row we had to do like this
-                }
-                else
-                {
-                    Response.Write(dr["Id"].ToString() + " - " + dr.RowState.ToString() + "</br>");
-                }
-            }
 
-            DataRow dr2 = ds.Tables["Students"].NewRow();
-            dr2["Id"] = 101;
-            dr2["Name"] = "Jonahthan";
-            dr2["TotalMarks"] = 9030;
-            dr2["Gender"] = "Male";
-            Response.Write("</br>" + dr2.RowState.ToString()); // rowstate: detached as it isnot added to any datatables. just row has been created but it is not added to datatable.
+            if (ds.HasChanges())
+            {
+                ds.RejectChanges();
+                lblMessage.Text = "Changes Rejected";
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                Cache["DATASET"] = ds;
+                GetDataFromCache();
+            }
+            else
+            {
+                lblMessage.Text = "No Changes Detected";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+            }
         }
     }
 }
@@ -193,6 +182,18 @@ namespace WebApplication1
  * Original: The original valus of row previous to modification. It wont be available for newly added rows.
  * Proposed: Proposed values for the row. This exists during an edit version operation on the row.
  * Default: Default row version for an added, modified or unchanged is "Current". For Deleted: Original, For detached it is proposed.
- * Original: 
+ * 
+ * 
+ * 
+ * Datarow.HasVersion(DataRowVersion.Original);
+ * Hasversion can be used to check the rowversion
+ * 
+ * When RejectChanges is invoked then RowState Property of each row changes. Added rows are removed. Deleted and modified state are 
+ * changed to "unchanged"
+
+
+
 
  */
+
+
