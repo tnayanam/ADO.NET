@@ -105,7 +105,7 @@ namespace WebApplication1
             // also we have not mentioned which are the rows which we have updated, or inserted.
             // all this information is stored in the DataTable. Once the below command is run then based on the RowState of the datatable
             // correspondiong attached update insert and deleter command is run.
-            da.Update(ds, "Students");
+            da.Update(ds, "Students"); // (+++)
             lblMessage.Text = "Database Updated!";
         }
 
@@ -190,7 +190,13 @@ namespace WebApplication1
  * 
  * When RejectChanges is invoked then RowState Property of each row changes. Added rows are removed. Deleted and modified state are 
  * changed to "unchanged"
-
+ * Accept Changes: WHen it is invoked the rowstate od added and modified is set to Unchaned and Deleted one is removed.
+ * So this is the default behavour when dataadpatersm"update" (+++)method is called and DB is updated.
+ * Also it is possible to call AcceptChanges explicitly. But if we do that then deleted rows will be remove from the dataset and also the 
+ * added and modified propert will be set to "Unchanged" and at this point if we try to update the DB I mean if we cann da.update(+++) on database then
+ *  nothing will HAPPEN because based on row state only queries are executed.
+ *  Both AccepeChanges  and  RejectChanges  are  applied  to  dataset  and  datatable and datarow  level.
+  
 
 
 
