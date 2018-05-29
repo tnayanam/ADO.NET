@@ -59,3 +59,14 @@ namespace WebApplication1
     3. ExecuteScalar -  Use when the query returns a single scalar value. for examle, queries that return the totdal number of rowas in a table.
 
      */
+/*
+ * Suppose you have one strongly typed datatable "StronglyTypedDatatable"
+ * public static void CopyRows(StronglyTypedDatatable dt)
+ * {
+ *  dt has 1000 rows but you need on 50 rows
+ *  var rows = dt.Where(r=>r.ID > 3) // 50 rows
+ *  StronglyTypedDatatable NewDT = new StronglyTypedDatatable();
+ *  NewDT.Merge(rows.CopyToDataTable()) 
+ *  Now we have the datatable that we need with 50 rows
+ * }
+ */
